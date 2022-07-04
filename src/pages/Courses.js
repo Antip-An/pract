@@ -8,14 +8,7 @@ const Courses = () => {
   return (
     <Card style={{ width: "95%", margin: "auto", marginTop: 20 }}>
       <Card.Body>
-        <Form.Select
-          style={{
-            width: "50rem",
-            margin: 20,
-            marginBottom: 20,
-            marginTop: 20,
-          }}
-        >
+        <Form.Select className="cathedra">
           <option>Все кафедры</option>
           <option value="1">ИБ ОО и цифровая гигиена педагога (ЦОС)</option>
           <option value="2">

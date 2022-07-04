@@ -13,7 +13,7 @@ const Footer = () => {
       <Row>
         <Col className="footer-element" xs={10} sm={6}>
           <h3>ВИРО</h3>
-          <p>ГАОУ ДПО ВО ВИРО – институт развития образования.</p>
+          <p>ГАОУ ДПО ВО ВИРО – институт развития образования</p>
         </Col>
         <Col className="footer-element" xs={10} sm={6}>
           <h3>Страницы</h3>
