@@ -46,7 +46,7 @@ const LoginPage = () => {
               <Card.Title>Вход в систему</Card.Title>
               <Form>
                 <Form.Group className="login-fg">
-                  <Form.Label>Адрес электронной почты</Form.Label>
+                  <Form.Label>Имя пользователя</Form.Label>
                   <Form.Control
                     type="text"
                     id="username"
