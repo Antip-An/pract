@@ -4,7 +4,7 @@ export const postData = async (path, body) => {
   const token = localStorage.getItem("token");
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const response = await fetch(`/api/v1${path}`, {
+  const response = await fetch(path, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
@@ -34,7 +34,7 @@ export const getData = async (path) => {
   const token = localStorage.getItem("token");
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const response = await fetch(`/api/v1${path}`, {
+  const response = await fetch(path, {
     method: "GET",
     headers,
   })
