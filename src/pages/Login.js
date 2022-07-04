@@ -18,11 +18,12 @@ const LoginPage = () => {
   useLoginGuard({ loggedIn: true, path: "/" });
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onLogin = async () => {
-    const response = await postData("/users/signin", { email, password });
+  const onLogin = async (e) => {
+    e.preventDefault();
+    const response = await postData("/auth/login", { username, password });
 
     if (!response.success) {
       alert(response.message);
@@ -30,13 +31,8 @@ const LoginPage = () => {
       return;
     }
 
-    localStorage.setItem("token", response.token);
+    localStorage.setItem("token", response.accessToken);
 
-    const res = await getData("/users/myself");
-    if (!res.success) return;
-
-    localStorage.setItem("role", res.user.role);
-    
     navigate("/");
   };
 
@@ -52,10 +48,10 @@ const LoginPage = () => {
                 <Form.Group className="login-fg">
                   <Form.Label>Адрес электронной почты</Form.Label>
                   <Form.Control
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
                   />
                 </Form.Group>
                 <Form.Group className="login-fg">
