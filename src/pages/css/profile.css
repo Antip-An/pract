@@ -1,0 +1,42 @@
+.out {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+
+.save {
+    width: 200px;
+    margin-top: 32px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+h4 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.profile {
+    margin-bottom: 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pass {
+    margin: 5px;
+}
+
+.pass2 {
+    margin: 5px;
+}
+
+h1 {
+    margin-top: 10px;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 30px;
+}

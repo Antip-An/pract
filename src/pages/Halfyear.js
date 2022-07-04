@@ -4,6 +4,8 @@ import Table from "react-bootstrap/Table";
 import { useEffect, useState } from "react";
 import { postData } from "../utils/network";
 
+import "./css/halfyear.css";
+
 const Halfyear = () => {
   const [courses, setCourses] = useState([]);
   const [years, setYears] = useState([]);

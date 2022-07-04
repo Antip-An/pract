@@ -70,7 +70,6 @@ const Courses = () => {
               ))
             : null}
         </Form.Select>
-
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
