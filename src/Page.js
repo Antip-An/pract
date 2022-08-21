@@ -7,8 +7,10 @@ import Footer from "./components/Footer";
 import LoginPage from "./pages/Login";
 
 import "./page.css"
+import useLoginGuard from "./hooks/useLoginGuard";
 
 const Page = () => {
+    useLoginGuard(false, "/login")
     const { loggedIn } = useToken();
     return(
         <div>

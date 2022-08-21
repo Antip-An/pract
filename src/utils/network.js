@@ -17,6 +17,9 @@ export const postData = async (path, body) => {
     }));
 
   if (!response.success) {
+    if (response.message === "Invalid access token") {
+      localStorage.removeItem("token");
+    }
     if (!response.code) {
       response.code = "SOMETHING_WRONG";
     }
@@ -46,6 +49,9 @@ export const getData = async (path) => {
     }));
 
   if (!response.success) {
+    if (response.message === "Invalid access token") {
+      localStorage.removeItem("token");
+    }
     if (!response.code) {
       response.code = "SOMETHING_WRONG";
     }
