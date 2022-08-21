@@ -1,6 +1,10 @@
+import { utils, writeFile } from "xlsx";
+import jwtDecode from "jwt-decode";
+
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 import "./css/courses.css";
 import { postData } from "../utils/network";
@@ -8,10 +12,26 @@ import { useEffect, useState } from "react";
 import useLoginGuard from "../hooks/useLoginGuard";
 
 const Courses = () => {
+  const userRole =
+    jwtDecode(localStorage.getItem("token")).user.role || "VIEWER";
+  console.log(userRole);
+
   useLoginGuard({ loggedIn: false, path: "/login" });
   const [courses, setCourses] = useState([]);
   const [cathedras, setCathedras] = useState([]);
   const [cathedraId, setCathedraId] = useState(0);
+  const [years, setYears] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [forms, setForms] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const convertToXLSX = (e) => {
+    const table = document.getElementById("courses-table");
+    const lastRow =
+      userRole === "EDITOR" && userRole === "ADMIN" ? table.rows.pop() : null;
+    const workbook = utils.table_to_book(table, { sheet: "Курсы" });
+    return writeFile(workbook, "Курсы.xlsx");
+  };
 
   const changeCathedra = async (e) => {
     setCathedraId(e.target.value);
@@ -42,6 +62,30 @@ const Courses = () => {
       return;
     }
     setCathedras(resCathedras.data);
+
+    const resYears = (await postData("/years/all")) || {};
+    if (!resYears.success) {
+      return;
+    }
+    setYears(resYears.data);
+
+    const resTeachers = (await postData("/users/all")) || {};
+    if (!resTeachers.success) {
+      return;
+    }
+    setTeachers(resTeachers.data);
+
+    const resForms = (await postData("/forms/all")) || {};
+    if (!resForms.success) {
+      return;
+    }
+    setForms(resForms.data);
+
+    const resCategories = (await postData("/listenerCategories/all")) || {};
+    if (!resCategories.success) {
+      return;
+    }
+    setCategories(resCategories.data);
   };
 
   useEffect(() => {
@@ -50,7 +94,7 @@ const Courses = () => {
 
   return (
     <Card style={{ width: "95%", margin: "auto", marginTop: 20 }}>
-      <Card.Body>
+      <Card.Header>
         <Form.Select
           style={{
             width: "50rem",
@@ -70,7 +114,9 @@ const Courses = () => {
               ))
             : null}
         </Form.Select>
-        <Table striped bordered hover size="sm">
+      </Card.Header>
+      <Card.Body style={{ overflowX: "scroll" }}>
+        <Table id="courses-table" striped bordered hover size="sm">
           <thead>
             <tr>
               <th>№</th>
@@ -122,9 +168,92 @@ const Courses = () => {
             ) : (
               <tr>Курсы не найдены</tr>
             )}
+            {userRole == "EDITOR" || userRole == "ADMIN" ? (
+              <tr>
+                <td>
+                  <input type="number" />
+                </td>
+                <td>
+                  <input type="text" />
+                </td>
+                <td>
+                  <input type="text" />
+                </td>
+                <td>
+                  <select>
+                    {years.map((y, i) => (
+                      <option value={y.id} key={i}>
+                        {y.year}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    {years.map((y, i) => (
+                      <option value={y.id} key={i}>
+                        {y.year}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <input type="date" />
+                  <input type="date" />
+                </td>
+                <td>
+                  <input type="number" />
+                </td>
+                <td>
+                  <input type="number" />
+                </td>
+                <td>
+                  <input type="number" />
+                </td>
+                <td>
+                  <input type="number" disabled />
+                </td>
+                <td>
+                  <select>
+                    {teachers.map((t, i) => (
+                      <option value={t.id} key={i}>
+                        {t.name}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    {forms.map((f, i) => (
+                      <option value={f.id} key={i}>
+                        {f.name}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    <option value={null}>Без категории</option>
+                    {categories.map((c, i) => (
+                      <option value={c.id} key={i}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <input type="text" />
+                </td>
+              </tr>
+            ) : null}
           </tbody>
         </Table>
       </Card.Body>
+      <Card.Footer>
+        <Button variant="success" onClick={convertToXLSX}>
+          Скачать как XLSX
+        </Button>
+      </Card.Footer>
     </Card>
   );
 };
