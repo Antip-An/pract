@@ -192,7 +192,7 @@ const Halfyear = () => {
                           backgroundColor: date.class ? "wheat" : "initial",
                         }}
                       >
-                        <p> </p>
+                        <p style={{visibility: "hidden"}}>{date.class ? "+" : " "}</p>
                       </td>
                     ))}
                     {getClasses(
@@ -208,7 +208,7 @@ const Halfyear = () => {
                           backgroundColor: date.class ? "wheat" : "initial",
                         }}
                       >
-                        <p> </p>
+                        <p style={{visibility: "hidden"}}>{date.class ? "+" : " "}</p>
                       </td>
                     ))}
                   </tr>
@@ -217,8 +217,8 @@ const Halfyear = () => {
           </tbody>
         </Table>
       </Card.Body>
-      <Card.Footer style={{ display: year ? "initial" : "none" }}>
-        <Button variant="success" onClick={convertToXLSX}>
+      <Card.Footer style={{ display: year ? "flex" : "none", justifyContent: "flex-end" }}>
+        <Button variant="secondary" onClick={convertToXLSX}>
           Скачать как XLSX
         </Button>
       </Card.Footer>

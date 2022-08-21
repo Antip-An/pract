@@ -14,7 +14,6 @@ import useLoginGuard from "../hooks/useLoginGuard";
 const Courses = () => {
   const userRole =
     jwtDecode(localStorage.getItem("token")).user.role || "VIEWER";
-  console.log(userRole);
 
   useLoginGuard({ loggedIn: false, path: "/login" });
   const [courses, setCourses] = useState([]);
@@ -168,89 +167,14 @@ const Courses = () => {
             ) : (
               <tr>Курсы не найдены</tr>
             )}
-            {userRole == "EDITOR" || userRole == "ADMIN" ? (
-              <tr>
-                <td>
-                  <input type="number" />
-                </td>
-                <td>
-                  <input type="text" />
-                </td>
-                <td>
-                  <input type="text" />
-                </td>
-                <td>
-                  <select>
-                    {years.map((y, i) => (
-                      <option value={y.id} key={i}>
-                        {y.year}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <select>
-                    {years.map((y, i) => (
-                      <option value={y.id} key={i}>
-                        {y.year}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <input type="date" />
-                  <input type="date" />
-                </td>
-                <td>
-                  <input type="number" />
-                </td>
-                <td>
-                  <input type="number" />
-                </td>
-                <td>
-                  <input type="number" />
-                </td>
-                <td>
-                  <input type="number" disabled />
-                </td>
-                <td>
-                  <select>
-                    {teachers.map((t, i) => (
-                      <option value={t.id} key={i}>
-                        {t.name}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <select>
-                    {forms.map((f, i) => (
-                      <option value={f.id} key={i}>
-                        {f.name}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <select>
-                    <option value={null}>Без категории</option>
-                    {categories.map((c, i) => (
-                      <option value={c.id} key={i}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <input type="text" />
-                </td>
-              </tr>
-            ) : null}
           </tbody>
         </Table>
       </Card.Body>
-      <Card.Footer>
-        <Button variant="success" onClick={convertToXLSX}>
+      <Card.Footer style={{display: "flex", justifyContent: "space-between"}}>
+        <Button variant="secondary">
+          Добавить курс
+        </Button>
+        <Button variant="secondary" onClick={convertToXLSX}>
           Скачать как XLSX
         </Button>
       </Card.Footer>
