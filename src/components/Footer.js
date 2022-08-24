@@ -3,10 +3,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import "./footer.css";
 
 const Footer = () => {
   const { pathname } = useLocation();
+  const userRole =
+    jwtDecode(localStorage.getItem("token")).user.role || "VIEWER";
 
   return (
     <Container id="footer" fluid>
@@ -35,7 +38,7 @@ const Footer = () => {
                 Полугодия
               </Link>
             </li>
-            <li>
+            {userRole === "ADMIN" ? <li>
               <Link
                 className={pathname === "/users" ? "current" : ""}
                 style={{ textDecoration: "none" }}
@@ -43,7 +46,7 @@ const Footer = () => {
               >
                 Пользователи
               </Link>
-            </li>
+            </li> : null}
           </ul>
         </Col>
       </Row>

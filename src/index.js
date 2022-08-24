@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -21,6 +22,7 @@ ReactDOM.render(
           <Route path="/halfyear" element={<Halfyear />} />
           <Route path="/users" element={<Users />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     </BrowserRouter>
